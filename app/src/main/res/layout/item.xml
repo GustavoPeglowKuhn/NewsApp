@@ -13,6 +13,7 @@
         android:layout_height="0dp"
         android:src="@mipmap/ic_launcher"
         android:background="@color/branco_quase"
+        android:padding="@dimen/recuo_pequeno"
         android:contentDescription="@string/descricao_imagem"/>
 
     <TextView
@@ -21,7 +22,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="22sp"
-        android:background="@color/branco_quase"/>
+        android:background="@color/branco_quase"
+        android:padding="@dimen/recuo_pequeno"/>
 
     <TextView
         android:id="@+id/item_resumo"
@@ -29,7 +31,8 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:maxLines="5"
-        android:background="@color/branco_quase"/>
+        android:background="@color/branco_quase"
+        android:padding="@dimen/recuo_pequeno"/>
 
     <TextView
         android:id="@+id/item_data"
@@ -37,5 +40,6 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textSize="14sp"
-        android:background="@color/branco_quase"/>
+        android:background="@color/branco_quase"
+        android:padding="@dimen/recuo_pequeno"/>
 </LinearLayout>
