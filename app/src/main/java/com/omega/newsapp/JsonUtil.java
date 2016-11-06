@@ -24,7 +24,7 @@ public class JsonUtil {
             String resumo = (String) object.get("resumo");
             String data = (String) object.get("data");
 
-            lista.add(new Item(null, titulo, resumo, data));
+            lista.add(new Item(imagem, titulo, resumo, data));
         }
 
         return lista;
