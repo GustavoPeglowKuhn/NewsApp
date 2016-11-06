@@ -11,10 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by Omega on 2016-11-02.
- */
-
 public class ItemAdapter extends ArrayAdapter<Item> {
     public ItemAdapter(Context context, List<Item> objects) {
         super(context, 0, objects);
@@ -31,8 +27,10 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         Item item = getItem(position);
 
         ImageView imagem = (ImageView) itemView.findViewById(R.id.item_imagem);
-        //imagem.setImageDrawable();    ??
+        imagem.setImageBitmap(item.getImagem());
+        //imagem.setImageDrawable();    ??      see:    http://www.devmedia.com.br/utilizando-imageview-no-android/27783
         //imagem.setImageURI();         ??
+
 
         TextView titulo = (TextView) itemView.findViewById(R.id.item_titulo);
         titulo.setText(item.getTitulo());

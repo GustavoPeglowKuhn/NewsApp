@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 //https://drive.google.com/file/d/0Bz8_rhlT4pQxQnJiSElOSFE0Y0k/view?usp=sharing
                 //https://drive.google.com/open?id=0Bz8_rhlT4pQxQnJiSElOSFE0Y0k
 
-                URL url = new URL("https://drive.google.com/file/d/0Bz8_rhlT4pQxQnJiSElOSFE0Y0k/view?usp=sharing");
+                URL url = new URL("http://alemao.esy.es/news.json");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -89,19 +89,18 @@ public class MainActivity extends AppCompatActivity {
                 return JsonUtil.fromJson(buffer.toString());
             } catch (Exception e) {
                 e.printStackTrace();
-                if (urlConnection != null) {
+            } finally {
+                if(urlConnection != null){
                     urlConnection.disconnect();
                 }
-
-                if (reader != null) {
+                if(reader != null){
                     try {
                         reader.close();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
-
             return null;
         }
 
