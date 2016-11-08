@@ -1,5 +1,6 @@
 package com.omega.newsapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ListView lista = (ListView) findViewById(R.id.lista);
 
         /*List<Item> itemsList = new ArrayList<>();
@@ -43,7 +43,13 @@ public class MainActivity extends AppCompatActivity {
         itemsList.add(new Item(null, "Lorem Ipsum", "lorem Ipsum", "30/02/2019"));
         itemsList.add(new Item(null, "Birl", "lorem Ipsum", "30/02/2020"));*/
 
-        adapter = new ItemAdapter(this, new ArrayList<Item>());
+
+        Intent intent = getIntent();
+        ItemList itemList = (ItemList) intent.getSerializableExtra("itens");
+        adapter = new ItemAdapter(this, itemList.getList() );
+
+
+        //adapter = new ItemAdapter(this, new ArrayList<Item>());
 
         lista.setAdapter(adapter);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,60 +62,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new NewsTask().execute();
+        //new NewsTask().execute();
     }
 
-    class NewsTask extends AsyncTask<Void, Void, List<Item>> {
-
-        @Override
-        protected List<Item> doInBackground(Void... params) {
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            try {
-                //https://drive.google.com/file/d/0Bz8_rhlT4pQxQnJiSElOSFE0Y0k/view?usp=sharing
-                //https://drive.google.com/open?id=0Bz8_rhlT4pQxQnJiSElOSFE0Y0k
-
-                URL url = new URL("http://alemao.esy.es/news.json");
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String linha;
-                StringBuffer buffer = new StringBuffer();
-                while((linha = reader.readLine()) != null) {
-                    buffer.append(linha);
-                    buffer.append("\n");
-                }
-
-                return JsonUtil.fromJson(buffer.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if(urlConnection != null){
-                    urlConnection.disconnect();
-                }
-                if(reader != null){
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<Item> itens) {
-            adapter.clear();
-            adapter.addAll(itens);
-            adapter.notifyDataSetChanged();
-        }
-    }
 
 }

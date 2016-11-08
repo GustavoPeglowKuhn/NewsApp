@@ -4,14 +4,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by Omega on 2016-11-02.
  */
 
-public class Item {
+public class Item{
     private String imagemUrl, titulo, resumo, data;
     Bitmap imagem;
 
@@ -83,3 +85,4 @@ public class Item {
         this.data = data;
     }
 }
+
