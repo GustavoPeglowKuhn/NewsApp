@@ -2,6 +2,7 @@ package com.omega.newsapp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.ImageView;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -13,21 +14,31 @@ import java.net.URL;
 
 public class Item {
     private String imagemUrl, titulo, resumo, data;
-    Bitmap imagem;
+    //Bitmap imagem;
+    ImageView imageView;
 
     public Item(String imagemUrl, String titulo, String resumo, String data) {
         setImagemUrl(imagemUrl);
         this.resumo = resumo;
         this.titulo = titulo;
         this.data = data;
+        this.imageView = null;
     }
 
-    public Bitmap getImagem() {
+    /*public Bitmap getImagem() {
         return imagem;
     }
 
     public void setImagem(Bitmap imagem) {
         this.imagem = imagem;
+    }*/
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     public String getImagemUrl() {
@@ -37,7 +48,7 @@ public class Item {
     public void setImagemUrl(String imagemUrl) {
         this.imagemUrl = imagemUrl;
 
-        if(imagemUrl != null) {
+        /*if(imagemUrl != null) {
             HttpURLConnection conexao = null;
             try {
                 URL url = new URL(imagemUrl);
@@ -56,7 +67,7 @@ public class Item {
                     conexao.disconnect();
                 }
             }
-        }
+        }*/
     }
 
     public String getTitulo() {

@@ -28,21 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
         ListView lista = (ListView) findViewById(R.id.lista);
 
-        /*List<Item> itemsList = new ArrayList<>();
-
-        itemsList.add(new Item(null, "001", "ipsum dolor sit amet, ad mei nullam graece alienum, vix fabellas" +
-                "vulputate ei. Meis luptatum singulis est ea. Pri id quot labore, suas" +
-                "melius quaeque cu eam. In suas aliquip pro. Eos ad everti percipitur" +
-                "interesset, fuisset consequuntur ut sea, labore vivendo eos te. No vel" +
-                "putent placerat, vel in malis deserunt.", "30/02/2017"));
-        itemsList.add(new Item(null, "Titulo", "t eos solet detracto temporibus, eu docendi apeirian\n" +
-                "euripidis vim, eam atqui option id. Possim aperiam cum ne, qui ut ullum\n" +
-                "delenit singulis. Omnis essent instructior ex mel, sea ad esse sale\n" +
-                "partem, simul melius docendi ne sed. Eam te aperiri omittam\n" +
-                "interpretaris.", "30/02/2018"));
-        itemsList.add(new Item(null, "Lorem Ipsum", "lorem Ipsum", "30/02/2019"));
-        itemsList.add(new Item(null, "Birl", "lorem Ipsum", "30/02/2020"));*/
-
         adapter = new ItemAdapter(this, new ArrayList<Item>());
 
         lista.setAdapter(adapter);
@@ -67,10 +52,7 @@ public class MainActivity extends AppCompatActivity {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
             try {
-                //https://drive.google.com/file/d/0Bz8_rhlT4pQxQnJiSElOSFE0Y0k/view?usp=sharing
-                //https://drive.google.com/open?id=0Bz8_rhlT4pQxQnJiSElOSFE0Y0k
-
-                URL url = new URL("http://alemao.esy.es/news.json");
+                URL url = new URL("http://alemao.esy.es/news/news.json");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -106,9 +88,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Item> itens) {
-            adapter.clear();
-            adapter.addAll(itens);
-            adapter.notifyDataSetChanged();
+            if(itens != null) {
+                adapter.clear();
+                adapter.addAll(itens);
+                adapter.notifyDataSetChanged();
+            }else {
+                adapter.add(new Item(null, "erro", "erro de conecção, não adianta chingar o programador, tua internet que é uma bosta", "09/11/2016"));
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 

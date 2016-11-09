@@ -1,6 +1,9 @@
 package com.omega.newsapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class ItemAdapter extends ArrayAdapter<Item> {
@@ -27,7 +36,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         Item item = getItem(position);
 
         ImageView imagem = (ImageView) itemView.findViewById(R.id.item_imagem);
-        imagem.setImageBitmap(item.getImagem());
+        item.setImageView(imagem);
+        //imagem.setImageBitmap(item.getImagem());
         //imagem.setImageDrawable();    ??      see:    http://www.devmedia.com.br/utilizando-imageview-no-android/27783
         //imagem.setImageURI();         ??
 
@@ -42,5 +52,46 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         data.setText(item.getData());
 
         return itemView;
+    }
+
+
+    class ImageTask extends AsyncTask<Item, Void, Bitmap> {
+
+        Item item;
+
+        @Override
+        protected Bitmap doInBackground(Item... params) {
+             item = params[0];
+            if (item  == null)
+                return null;
+
+            HttpURLConnection conexao = null;
+            try {
+                URL url = new URL(item.getImagemUrl());
+                conexao = (HttpURLConnection) url.openConnection();
+                conexao.setRequestMethod("GET");
+                conexao.setDoInput(true);
+                conexao.connect();
+
+                InputStream is = conexao.getInputStream();
+                return ( BitmapFactory.decodeStream(is) );
+
+            }catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if(conexao != null){
+                    conexao.disconnect();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+            if(result != null && item != null) {
+                item.getImageView().setImageBitmap(result);
+            }
+        }
     }
 }
