@@ -3,6 +3,7 @@ package com.omega.newsapp;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -35,11 +36,14 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         Item item = getItem(position);
 
-        ImageView imagem = (ImageView) itemView.findViewById(R.id.item_imagem);
-        item.setImageView(imagem);
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.item_imagem);
+        item.setImageView(imageView);
+        new ImageTask().execute(item);
         //imagem.setImageBitmap(item.getImagem());
         //imagem.setImageDrawable();    ??      see:    http://www.devmedia.com.br/utilizando-imageview-no-android/27783
         //imagem.setImageURI();         ??
+        //if(item.getImagemUrl()!=null)
+        //    imageView.setImageURI( Uri.parse( item.getImagemUrl() ) );
 
 
         TextView titulo = (TextView) itemView.findViewById(R.id.item_titulo);
@@ -57,7 +61,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     class ImageTask extends AsyncTask<Item, Void, Bitmap> {
 
-        Item item;
+        Item item = null;
 
         @Override
         protected Bitmap doInBackground(Item... params) {
@@ -88,10 +92,10 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
             if(result != null && item != null) {
                 item.getImageView().setImageBitmap(result);
             }
+            super.onPostExecute(result);
         }
     }
 }

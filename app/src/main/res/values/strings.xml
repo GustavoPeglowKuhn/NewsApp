@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NewsApp</string>
     <string name="descricao_imagem">Imagem</string>
+    <string name="json_link">http://www.alemao.esy.es/news/news.json</string>
 </resources>

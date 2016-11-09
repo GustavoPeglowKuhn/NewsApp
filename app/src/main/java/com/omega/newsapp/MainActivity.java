@@ -51,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
+            List<Item> lista = null;
+
+            String s = getResources().getString(R.string.json_link);
             try {
-                URL url = new URL("http://alemao.esy.es/news/news.json");
+                URL url = new URL(s);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     buffer.append("\n");
                 }
 
-                return JsonUtil.fromJson(buffer.toString());
+                lista = JsonUtil.fromJson(buffer.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            return null;
+            return lista;
         }
 
         @Override
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.add(new Item(null, "erro", "erro de conecção, não adianta chingar o programador, tua internet que é uma bosta", "09/11/2016"));
                 adapter.notifyDataSetChanged();
             }
+            super.onPostExecute(itens);
         }
     }
 
