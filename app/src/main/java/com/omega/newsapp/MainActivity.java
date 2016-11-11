@@ -1,5 +1,6 @@
 package com.omega.newsapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,10 +26,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         ListView lista = (ListView) findViewById(R.id.lista);
 
         adapter = new ItemAdapter(this, new ArrayList<Item>());
+
+        Intent intent = getIntent();
+        ItemList itemList = (ItemList) intent.getSerializableExtra("itens");
+        adapter = new ItemAdapter(this, itemList.getList() );
+
+
+        //adapter = new ItemAdapter(this, new ArrayList<Item>());
 
         lista.setAdapter(adapter);
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,10 +48,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new NewsTask().execute();
+        //new NewsTask().execute();
     }
 
-    class NewsTask extends AsyncTask<Void, Void, List<Item>> {
 
         @Override
         protected List<Item> doInBackground(Void... params) {
