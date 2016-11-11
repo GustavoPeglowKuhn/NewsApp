@@ -1,10 +1,6 @@
 package com.omega.newsapp;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 public class ItemAdapter extends ArrayAdapter<Item> {
@@ -38,7 +28,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.item_imagem);
         item.setImageView(imageView);
-        new ImageTask().execute(item);
+        //new ImageTask().execute(item);
         //imagem.setImageBitmap(item.getImagem());
         //imagem.setImageDrawable();    ??      see:    http://www.devmedia.com.br/utilizando-imageview-no-android/27783
         //imagem.setImageURI();         ??
@@ -59,7 +49,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     }
 
 
-    class ImageTask extends AsyncTask<Item, Void, Bitmap> {
+    /*class ImageTask extends AsyncTask<Item, Void, Bitmap> {
 
         Item item = null;
 
@@ -97,5 +87,5 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             }
             super.onPostExecute(result);
         }
-    }
+    }*/
 }
