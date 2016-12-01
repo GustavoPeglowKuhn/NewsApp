@@ -26,10 +26,14 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         Item item = getItem(position);
 
-        ImageView imagem = (ImageView) itemView.findViewById(R.id.item_imagem);
-        imagem.setImageBitmap(item.getImagem());
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.item_imagem);
+        item.setImageView(imageView);
+        //new ImageTask().execute(item);
+        //imagem.setImageBitmap(item.getImagem());
         //imagem.setImageDrawable();    ??      see:    http://www.devmedia.com.br/utilizando-imageview-no-android/27783
         //imagem.setImageURI();         ??
+        //if(item.getImagemUrl()!=null)
+        //    imageView.setImageURI( Uri.parse( item.getImagemUrl() ) );
 
 
         TextView titulo = (TextView) itemView.findViewById(R.id.item_titulo);
@@ -43,4 +47,45 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         return itemView;
     }
+
+
+    /*class ImageTask extends AsyncTask<Item, Void, Bitmap> {
+
+        Item item = null;
+
+        @Override
+        protected Bitmap doInBackground(Item... params) {
+             item = params[0];
+            if (item  == null)
+                return null;
+
+            HttpURLConnection conexao = null;
+            try {
+                URL url = new URL(item.getImagemUrl());
+                conexao = (HttpURLConnection) url.openConnection();
+                conexao.setRequestMethod("GET");
+                conexao.setDoInput(true);
+                conexao.connect();
+
+                InputStream is = conexao.getInputStream();
+                return ( BitmapFactory.decodeStream(is) );
+
+            }catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if(conexao != null){
+                    conexao.disconnect();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            if(result != null && item != null) {
+                item.getImageView().setImageBitmap(result);
+            }
+            super.onPostExecute(result);
+        }
+    }*/
 }
